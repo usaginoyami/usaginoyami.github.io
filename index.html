@@ -130,6 +130,10 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
 .full a { color: var(--red); text-underline-offset: 3px; }
 .full a:hover { color: #ff1f36; }
 .full .src { color: var(--muted); font-size: .9rem; }
+
+.dl { display: flex; gap: 10px; flex-wrap: wrap; margin: 6px 0 8px; }
+.btn.sm { font-size: .95rem; padding: 10px 32px 10px 22px; }
+.dlnote { font-family: var(--f-label); font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
 </style>
 </head>
 <body>
@@ -175,6 +179,45 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
       <svg class="stroke" viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 8 L40 4 L90 7 L150 3 L230 6 L320 2 L410 6 L500 3 L600 7 L560 11 L470 9 L380 12 L290 9 L200 13 L110 10 L50 13 Z"/></svg>
 
       <div class="list">
+        <article class="post" data-cat="Notícias">
+          <time class="date" datetime="2026-10-12"><b>12</b>OUT</time>
+          <div>
+            <h3><a href="#post-gow3-bb" data-toggle="post-gow3-bb">God of War III e Bloodborne no PC: ports nativos feitos por fãs</a></h3>
+            <p>Dois projetos da comunidade rodam God of War III Remastered e Bloodborne direto no Windows, com Vulkan. Os dois estão em fase experimental e exigem o seu próprio dump do jogo.</p>
+            <div class="full" id="post-gow3-bb" hidden>
+              <p>Dois ports feitos por fãs chamaram atenção nos últimos dias: <b>God of War III Remastered</b> e <b>Bloodborne</b>, ambos rodando de forma nativa no Windows. Não são ports oficiais.</p>
+
+              <h4>Como funcionam</h4>
+              <p>Não são emuladores gerais. Segundo os READMEs, o código x86-64 original do jogo roda direto no processador do PC (o PS4 usa a mesma arquitetura), uma pequena runtime feita para cada jogo substitui as bibliotecas do PS4 e os gráficos são traduzidos para Vulkan por um renderizador derivado do shadPS4.</p>
+
+              <h4>God of War III Remastered</h4>
+              <p>É a versão de PS4 (e não o jogo original de PS3), com port para Windows 10 e 11. O projeto de FelipePrado0 é um fork do port de Supermedo, que por sua vez nasceu do port de Bloodborne de deadinside28. O README diz que o jogo é jogável do início ao fim em 1080p. No hardware de teste (RX 6700 XT e Ryzen 5 5600X), a média é de 144 FPS em 1080p e 108 FPS em 4K com FSR 1. O bug conhecido são texturas quebradas em outras resoluções de renderização, e o projeto está marcado como Alpha. Ele pede o dump CUSA01623, versão 01.02.</p>
+
+              <h4>Bloodborne</h4>
+              <p>O port Linux é de deadinside28 e o fork para Windows, com launcher, é de Supermedo. Ele usa o dump CUSA03173, versão 1.09. O README chama o projeto de experimental e jogável: o jogo inicia, carrega saves e roda com som e controle. Uma partida completa ainda não foi verificada. Os testes foram feitos em uma RX 7800 XT no Linux e em uma RTX 5080 no Windows. O FSR 4 é opcional e exige DLLs da AMD que você mesmo obtém. Sem isso, o port usa o FSR 3.1.</p>
+
+              <h4>O que você precisa</h4>
+              <p>Nenhum dos dois inclui arquivos do jogo. É preciso ter o dump do jogo que você comprou, Windows 10 (1903 ou superior) ou 11 de 64 bits, e uma placa de vídeo com Vulkan 1.3 e driver atualizado. Aqui no blog eu não indico onde achar os arquivos do jogo.</p>
+
+              <h4>Antes de baixar</h4>
+              <p>São projetos em fase inicial e podem ter bugs. O zip não é assinado digitalmente, então o Windows pode exibir um alerta. Baixe só pela página oficial de cada projeto no GitHub e evite reposts em outros sites. O código é GPL, então dá para compilar você mesmo. Eu não testei os binários. Os projetos não têm ligação com a Sony, a Santa Monica Studio ou a FromSoftware.</p>
+
+              <p>Você pretende testar? Conta no chat da live.</p>
+
+              <p class="src">Fontes:
+                <a href="https://github.com/FelipePrado0/gow3_pc" rel="noopener">gow3_pc (FelipePrado0)</a>,
+                <a href="https://github.com/Supermedo/bloodborne_pc" rel="noopener">bloodborne_pc (Supermedo)</a>.</p>
+            </div>
+            <div class="dl">
+              <a class="btn sm" href="https://github.com/FelipePrado0/gow3_pc/releases" rel="noopener">Baixar God of War III</a>
+              <a class="btn sm" href="https://github.com/Supermedo/bloodborne_pc/releases" rel="noopener">Baixar Bloodborne</a>
+            </div>
+            <p class="dlnote">Os links levam à página oficial de cada projeto no GitHub. Os arquivos do jogo não estão incluídos.</p>
+            <button class="more" type="button" aria-expanded="false" aria-controls="post-gow3-bb" data-toggle="post-gow3-bb">Ler post completo</button>
+            <div class="meta"><span class="cat">Notícias</span><span>3 min de leitura</span></div>
+          </div>
+        </article>
+
         <article class="post" data-cat="Notícias">
           <time class="date" datetime="2026-10-12"><b>12</b>OUT</time>
           <div>
