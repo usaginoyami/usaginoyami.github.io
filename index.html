@@ -119,6 +119,17 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
   .date b { font-size: 1.5rem; }
   nav { gap: 16px; }
 }
+
+.more { margin-top: 4px; margin-bottom: 12px; background: transparent; color: var(--fg); border: 1px solid var(--red); padding: 8px 18px; font-family: var(--f-label); font-weight: 700; font-size: .9rem; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
+.more:hover { background: var(--red-deep); }
+.full { margin: 14px 0 16px; padding-left: 16px; border-left: 3px solid var(--red); max-width: 64ch; }
+.full[hidden] { display: none !important; }
+.full h4 { font-family: var(--f-display); font-weight: 400; font-style: italic; text-transform: uppercase; font-size: 1.15rem; letter-spacing: .03em; margin: 22px 0 6px; color: var(--fg); }
+.full h4:first-child { margin-top: 0; }
+.full p { color: var(--fg); margin: 0 0 12px; max-width: none; }
+.full a { color: var(--red); text-underline-offset: 3px; }
+.full a:hover { color: #ff1f36; }
+.full .src { color: var(--muted); font-size: .9rem; }
 </style>
 </head>
 <body>
@@ -154,6 +165,7 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
         <h2 class="silver">Últimos posts</h2>
         <div class="filters" role="group" aria-label="Filtrar por categoria">
           <button type="button" data-cat="todos" aria-pressed="true">Todos</button>
+          <button type="button" data-cat="Notícias" aria-pressed="false">Notícias</button>
           <button type="button" data-cat="Let's Play" aria-pressed="false">Let's Play</button>
           <button type="button" data-cat="Destaques" aria-pressed="false">Destaques</button>
           <button type="button" data-cat="Variety" aria-pressed="false">Variety</button>
@@ -163,6 +175,44 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
       <svg class="stroke" viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 8 L40 4 L90 7 L150 3 L230 6 L320 2 L410 6 L500 3 L600 7 L560 11 L470 9 L380 12 L290 9 L200 13 L110 10 L50 13 Z"/></svg>
 
       <div class="list">
+        <article class="post" data-cat="Notícias">
+          <time class="date" datetime="2026-10-12"><b>12</b>OUT</time>
+          <div>
+            <h3><a href="#post-ports" data-toggle="post-ports">Ports de PC em 2026: o que saiu, o que vem e o que a Sony está fazendo</a></h3>
+            <p>Death Stranding 2 já saiu no PC, um port de Mario Odyssey apareceu por conta de um fã e a Sony pode estar freando os exclusivos. Juntei o que dá para confirmar.</p>
+            <div class="full" id="post-ports" hidden>
+              <p>Port de console para PC virou assunto o ano inteiro. Separei o que é oficial do que é rumor, para você não cair em notícia furada.</p>
+
+              <h4>O que já saiu</h4>
+              <p><b>Death Stranding 2: On the Beach</b> chegou ao PC em 19 de março de 2026, com confirmação da própria PlayStation. Foi um dos poucos ports grandes do ano que tiveram data e lançamento certinho.</p>
+
+              <h4>O que ainda vem</h4>
+              <p><b>Kena: Scars of Kosmora</b> aparece como previsto para o PC em 2026, segundo a imprensa. Não encontrei uma data confirmada, então trate como "a caminho" e não como certo.</p>
+
+              <h4>O port que não é oficial</h4>
+              <p>Um desenvolvedor chamado Belmante mostrou <b>Super Mario Odyssey</b> rodando como aplicativo nativo de Windows, sem emulador. Em um notebook com RTX 3050, ele fica perto de 58 a 59 FPS. Mas a versão está no começo: o áudio não funciona, há falhas visuais e não existe build pública. A Nintendo não anunciou nada, e o próprio desenvolvedor fala em novembro só como possibilidade, com questões legais ainda em aberto.</p>
+
+              <h4>E a Sony?</h4>
+              <p>Em março, a Bloomberg noticiou, com base em fontes internas, que a Sony estaria deixando de portar para PC os exclusivos single-player do PS5. <i>Marvel's Wolverine</i>, <i>Ghost of Yōtei</i> e <i>Saros</i> foram os jogos citados. A Sony não confirmou isso. Em abril, a descrição da Nixxes no site da PlayStation Studios passou a falar em equipes especializadas em ports de PC, então a porta não parece fechada. Jogos online e multiplayer seguem normais.</p>
+
+              <h4>E em outubro?</h4>
+              <p>Os grandes lançamentos do mês saem no PC junto com os consoles, como <b>Gears of War: E-Day</b> (6/10) e <b>Phantom Blade Zero</b> (29/10). Não encontrei nenhum port de console para PC com data marcada em outubro.</p>
+
+              <p>E você, qual exclusivo de console quer ver no PC? Conta no chat da live.</p>
+
+              <p class="src">Fontes:
+                <a href="https://blog.playstation.com/?p=415073">PlayStation Blog</a>,
+                <a href="https://www.gematsu.com/2026/02/death-stranding-2-on-the-beach-coming-to-pc-on-march-19">Gematsu</a>,
+                <a href="https://www.notebookcheck.net/Wolverine-and-Ghost-of-Yotei-among-PS5-exclusive-games-that-PlayStation-will-not-port-to-PC.1242446.0.html">Notebookcheck</a>,
+                <a href="https://www.gsmgotech.com/2026/04/sony-walks-back-pc-ports-nixxes.html">GSMGoTech</a>,
+                <a href="https://www.generationamiga.com/2026/10/11/super-mario-odyssey-pc-port-could-arrive-in-november-2026/">Generation Amiga</a>,
+                <a href="https://gg.deals/blog/new-video-games-in-october-2026-13-pc-console-releases-were-excited-about/">gg.deals</a>.</p>
+            </div>
+            <button class="more" type="button" aria-expanded="false" aria-controls="post-ports" data-toggle="post-ports">Ler post completo</button>
+            <div class="meta"><span class="cat">Notícias</span><span>3 min de leitura</span></div>
+          </div>
+        </article>
+
         <article class="post" data-cat="Let's Play">
           <time class="date" datetime="2026-10-10"><b>10</b>OUT</time>
           <div>
@@ -267,6 +317,16 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
   document.getElementById('form-aviso').addEventListener('submit', function (e) {
     e.preventDefault();
     document.getElementById('ok').textContent = 'Este formulário é só um modelo. Conecte a um serviço de e-mail para funcionar.';
+  });
+  document.querySelectorAll('[data-toggle]').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      var box = document.getElementById(el.getAttribute('data-toggle'));
+      var btn = document.querySelector('button[data-toggle="' + el.getAttribute('data-toggle') + '"]');
+      box.hidden = !box.hidden;
+      btn.setAttribute('aria-expanded', box.hidden ? 'false' : 'true');
+      btn.textContent = box.hidden ? 'Ler post completo' : 'Fechar post';
+    });
   });
 })();
 </script>
