@@ -137,6 +137,11 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
 
 .watch { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin: 6px 0 14px; padding: 16px 18px; background: var(--surface); border-left: 3px solid var(--red); }
 .watch strong { font-family: var(--f-display); font-weight: 400; font-style: italic; text-transform: uppercase; font-size: 1.15rem; flex: 1 1 220px; min-width: 0; }
+
+.full ul, .full ol { margin: 0 0 12px; padding-left: 22px; }
+.full li { margin-bottom: 6px; }
+.full li::marker { color: var(--red); }
+.full .aviso { color: var(--muted); font-size: .9rem; }
 </style>
 </head>
 <body>
@@ -173,6 +178,7 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
         <div class="filters" role="group" aria-label="Filtrar por categoria">
           <button type="button" data-cat="todos" aria-pressed="true">Todos</button>
           <button type="button" data-cat="Notícias" aria-pressed="false">Notícias</button>
+          <button type="button" data-cat="Emulação" aria-pressed="false">Emulação</button>
           <button type="button" data-cat="Let's Play" aria-pressed="false">Let's Play</button>
           <button type="button" data-cat="Destaques" aria-pressed="false">Destaques</button>
           <button type="button" data-cat="Variety" aria-pressed="false">Variety</button>
@@ -182,6 +188,55 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
       <svg class="stroke" viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 8 L40 4 L90 7 L150 3 L230 6 L320 2 L410 6 L500 3 L600 7 L560 11 L470 9 L380 12 L290 9 L200 13 L110 10 L50 13 Z"/></svg>
 
       <div class="list">
+        <article class="post" data-cat="Emulação">
+          <time class="date" datetime="2026-10-14"><b>14</b>OUT</time>
+          <div>
+            <h3><a href="#post-forks" data-toggle="post-forks">O que são forks na emulação de PS4 e PS5?</a></h3>
+            <p>Se você já procurou emulador de PS4 ou PS5, com certeza esbarrou na palavra "fork". Todo mundo cita, mas pouca gente explica.</p>
+            <div class="full" id="post-forks" hidden>
+              <p>Se você já procurou emulador de PS4 ou PS5, com certeza esbarrou na palavra "fork". Todo mundo cita, mas pouca gente explica.</p>
+
+              <h4>O que é um fork?</h4>
+              <p>Fork é uma cópia de um projeto de código aberto que alguém pega e passa a desenvolver por conta própria. O projeto original continua existindo, e o fork segue um caminho paralelo, com mudanças que o autor achou importantes. Pense assim: o emulador oficial é a receita base, e o fork é alguém que pegou a receita e ajustou pro próprio gosto.</p>
+
+              <h4>Por que isso aparece tanto na emulação?</h4>
+              <p>Emuladores são projetos enormes, mantidos por comunidades. Nem sempre a equipe principal aceita todas as mudanças rapidamente, e aí surgem os forks:</p>
+              <ul>
+                <li><b>Correções para jogos específicos:</b> alguém conserta um título que travava e publica a própria versão.</li>
+                <li><b>Otimizações de desempenho:</b> ajustes para rodar com mais FPS em certos hardwares.</li>
+                <li><b>Recursos extras:</b> opções que o projeto oficial ainda não tem.</li>
+                <li><b>Testes e experimentos:</b> ideias que podem (ou não) voltar para o projeto original.</li>
+              </ul>
+
+              <h4>E no PS4?</h4>
+              <p>O emulador de PS4 mais conhecido e ativo é o shadPS4. Por ser código aberto, ele tem vários forks circulando. Alguns viram builds populares na comunidade, outros ficam parados com o tempo.</p>
+
+              <h4>E no PS5?</h4>
+              <p>Hoje não existe emulador de PS5 realmente utilizável para jogar. O que circula com esse nome costuma ser projeto experimental, fork em estágio muito inicial ou, em muitos casos, golpe. Desconfie de qualquer "emulador de PS5 pronto" para baixar.</p>
+
+              <h4>Fork é melhor que o oficial?</h4>
+              <p>Nem sempre. Um fork pode ter novidades antes, mas a estabilidade varia muito e o suporte depende do autor. O oficial costuma ser mais previsível e ter comunidade maior. Um fork pode ser ótimo em um jogo e quebrar em outro, então vale testar e comparar.</p>
+
+              <h4>Como se proteger</h4>
+              <ol>
+                <li>Baixe só de repositórios no GitHub com histórico claro de commits.</li>
+                <li>Veja se o projeto tem issues, releases e atividade recente.</li>
+                <li>Desconfie de executáveis soltos, links encurtados e "versões premium".</li>
+                <li>Em caso de dúvida, volte para a versão oficial.</li>
+              </ol>
+
+              <h4>Resumindo</h4>
+              <p>Fork não é sinônimo de pirataria nem de versão melhor: é só uma ramificação de um projeto aberto. Pode trazer avanços reais, mas exige que você saiba de onde está baixando.</p>
+
+              <p>Já testou algum fork? Conta nos comentários qual e como foi a experiência.</p>
+
+              <p class="aviso">Aviso final: texto informativo. Emule apenas jogos que você possui legalmente.</p>
+            </div>
+            <button class="more" type="button" aria-expanded="false" aria-controls="post-forks" data-toggle="post-forks">Ler post completo</button>
+            <div class="meta"><span class="cat">Emulação</span><span>2 min de leitura</span></div>
+          </div>
+        </article>
+
         <article class="post" data-cat="Notícias">
           <time class="date" datetime="2026-10-14"><b>14</b>OUT</time>
           <div>
