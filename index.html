@@ -142,6 +142,10 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
 .full li { margin-bottom: 6px; }
 .full li::marker { color: var(--red); }
 .full .aviso { color: var(--muted); font-size: .9rem; }
+
+.full pre { background: var(--bg); border: 1px solid var(--line); border-left: 3px solid var(--red); padding: 12px 14px; margin: 0 0 12px; overflow-x: auto; max-width: 100%; }
+.full code { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: .85rem; color: var(--fg); }
+.full p code, .full li code { background: var(--surface); padding: 1px 6px; overflow-wrap: anywhere; }
 </style>
 </head>
 <body>
@@ -179,6 +183,7 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
           <button type="button" data-cat="todos" aria-pressed="true">Todos</button>
           <button type="button" data-cat="Notícias" aria-pressed="false">Notícias</button>
           <button type="button" data-cat="Emulação" aria-pressed="false">Emulação</button>
+          <button type="button" data-cat="Ferramentas" aria-pressed="false">Ferramentas</button>
           <button type="button" data-cat="Let's Play" aria-pressed="false">Let's Play</button>
           <button type="button" data-cat="Destaques" aria-pressed="false">Destaques</button>
           <button type="button" data-cat="Variety" aria-pressed="false">Variety</button>
@@ -188,6 +193,76 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
       <svg class="stroke" viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true"><path fill="currentColor" d="M0 8 L40 4 L90 7 L150 3 L230 6 L320 2 L410 6 L500 3 L600 7 L560 11 L470 9 L380 12 L290 9 L200 13 L110 10 L50 13 Z"/></svg>
 
       <div class="list">
+        <article class="post" data-cat="Ferramentas">
+          <time class="date" datetime="2026-10-15"><b>15</b>OUT</time>
+          <div>
+            <h3><a href="#post-autocut" data-toggle="post-autocut">AutoCut Free: painel gratuito para cortar silêncios e gerar highlights no Premiere</a></h3>
+            <p>Fiz um painel gratuito para o Adobe Premiere Pro que corta silêncios, seleciona highlights de gameplay e gera legendas. Roda offline e o código é aberto.</p>
+            <div class="full" id="post-autocut" hidden>
+              <p>Editar vídeo com fala ou gameplay dá muito trabalho repetitivo: cortar pausa, achar os melhores momentos, legendar. Por isso eu criei o <b>AutoCut Free</b>, um painel gratuito para o Adobe Premiere Pro, e deixei o código aberto no GitHub para quem quiser usar.</p>
+
+              <h4>O que ele faz</h4>
+              <ul>
+                <li><b>Corta silêncios:</b> remove pausas com limiar automático, medido pelo volume, ou manual.</li>
+                <li><b>Highlights de gameplay:</b> seleciona os momentos de áudio mais altos, com tempo antes e depois configurável.</li>
+                <li><b>Mantém todas as faixas de áudio:</b> cada uma continua na sua trilha.</li>
+                <li><b>Legendas:</b> usa o faster-whisper, transcreve só os trechos mantidos e gera um arquivo <code>.srt</code>.</li>
+                <li><b>Zoom automático:</b> alterna a escala entre 100% e um valor seu (o padrão é 112%) a cada corte.</li>
+                <li><b>Não mexe no original:</b> ele cria uma sequência nova chamada <code>&lt;video&gt;_autocut</code>.</li>
+              </ul>
+
+              <h4>O que você precisa</h4>
+              <ul>
+                <li>Windows e Adobe Premiere Pro 2022 ou mais novo (testei no 26.0 em português).</li>
+                <li>FFmpeg instalado e no PATH. Dá para instalar com <code>winget install Gyan.FFmpeg</code>.</li>
+                <li>Python 3.12, que o próprio instalador coloca, só para o Whisper.</li>
+              </ul>
+
+              <h4>Como instalar</h4>
+              <ol>
+                <li>Baixe ou clone o repositório (no GitHub, botão <b>Code</b> e depois <b>Download ZIP</b>).</li>
+                <li>Dê dois cliques no <code>install.bat</code>. Ele copia o painel para a pasta de extensões do Premiere e instala o Python 3.12 (se precisar) e o faster-whisper.</li>
+                <li>Reinicie o Premiere e abra <b>Janela &gt; Extensões &gt; AutoCut Free</b>.</li>
+              </ol>
+              <p>Um detalhe de transparência: para o Premiere carregar um painel que não é assinado, o instalador ativa o <code>PlayerDebugMode</code> do CEP. Isso está descrito no README, e você pode ler o <code>install.bat</code> antes de rodar. Para desinstalar, é só apagar a pasta <code>AutoCutFree</code> em <code>%APPDATA%\Adobe\CEP\extensions</code>.</p>
+
+              <h4>Como usar</h4>
+              <ol>
+                <li>Escolha o vídeo em <b>Abrir</b>, ou use <b>Usar clipe selecionado na timeline</b>.</li>
+                <li>Escolha o modo (silêncio ou highlights) e a faixa de áudio. Para cortar silêncio e legendar, use a faixa do microfone (0 é a primeira faixa).</li>
+                <li>Marque zoom e/ou legendas e clique em <b>Cortar e importar</b>.</li>
+              </ol>
+
+              <h4>Sem abrir o Premiere</h4>
+              <p>O motor é um único script Python que gera um XML para o Premiere importar, então dá para rodar pela linha de comando:</p>
+<pre><code>python extension/autocut_free.py video.mp4 --mode silence --track 1 --captions
+python extension/autocut_free.py gameplay.mp4 --mode highlights --top 12 --before 6 --after 4</code></pre>
+
+              <h4>Limitações</h4>
+              <ul>
+                <li>Ele cria uma sequência nova e não corta uma sequência que você já editou.</li>
+                <li>Os highlights usam só o volume do áudio e não analisam a imagem.</li>
+                <li>O zoom é fixo e centralizado, sem rastrear rosto ou ação.</li>
+                <li>Se aplicar as legendas por script falhar na sua versão do Premiere, arraste o <code>.srt</code> para a timeline.</li>
+                <li>O Whisper roda na CPU por padrão. Para usar a placa de vídeo, é preciso <code>--device cuda</code> e as bibliotecas CUDA.</li>
+                <li>O instalador funciona só no Windows.</li>
+              </ul>
+
+              <h4>Feito para a comunidade</h4>
+              <p>O projeto é gratuito, com licença MIT, e eu o fiz para uso pessoal. Ele é independente e não tem relação com plugins pagos de nome parecido. Se você é editor, teste, abra uma issue com o que não funcionou e mande sugestões. É assim que a ferramenta melhora para todo mundo.</p>
+
+              <p>Usa outro editor, como DaVinci Resolve? Conta nos comentários, porque o AutoCut Free hoje só funciona com o Premiere.</p>
+
+              <p class="src">Código e README: <a href="https://github.com/usaginoyami/autocut-free" rel="noopener">github.com/usaginoyami/autocut-free</a>.</p>
+            </div>
+            <div class="dl">
+              <a class="btn sm" href="https://github.com/usaginoyami/autocut-free" rel="noopener">Ver no GitHub</a>
+            </div>
+            <button class="more" type="button" aria-expanded="false" aria-controls="post-autocut" data-toggle="post-autocut">Ler post completo</button>
+            <div class="meta"><span class="cat">Ferramentas</span><span>3 min de leitura</span></div>
+          </div>
+        </article>
+
         <article class="post" data-cat="Emulação">
           <time class="date" datetime="2026-10-14"><b>14</b>OUT</time>
           <div>
