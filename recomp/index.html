@@ -71,6 +71,8 @@ nav a:hover, nav a[aria-current] { color: var(--red); }
 .info { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .info h2 { font-family: var(--f-display); font-weight: 400; font-style: italic; text-transform: uppercase; font-size: 1.15rem; line-height: 1.2; margin: 0; letter-spacing: .02em; overflow-wrap: anywhere; }
 .info p { margin: 0; color: var(--muted); font-size: .92rem; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.ports { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-family: var(--f-label); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.ports span.t { border: 1px solid var(--line); color: var(--fg); padding: 1px 8px; letter-spacing: .08em; }
 .info .row { margin-top: auto; padding-top: 6px; display: flex; gap: 8px; flex-wrap: wrap; }
 
 .msg { color: var(--muted); padding: 28px 0; }
@@ -108,10 +110,13 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
 
     <div class="controls">
       <label class="grow">Buscar
-        <input id="busca" type="search" placeholder="Nome, plataforma ou descrição…" autocomplete="off">
+        <input id="busca" type="search" placeholder="Nome, plataforma, destino ou descrição…" autocomplete="off">
       </label>
       <label>Plataforma
         <select id="plataforma"><option value="">Todas</option></select>
+      </label>
+      <label>Portado para
+        <select id="portado"><option value="">Todas</option></select>
       </label>
       <span class="count" id="contagem" aria-live="polite"></span>
     </div>
@@ -135,6 +140,7 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
   var grade = document.getElementById('grade');
   var busca = document.getElementById('busca');
   var plat = document.getElementById('plataforma');
+  var port = document.getElementById('portado');
   var contagem = document.getElementById('contagem');
   var vazio = document.getElementById('vazio');
   var jogos = [];
@@ -152,6 +158,17 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
     var c = String(g.cover || '');
     if (/^covers\/[A-Za-z0-9._-]{1,80}\.(jpg|png|webp|gif)$/.test(c)) return BASE + c;
     return https(c);
+  }
+
+  // "Portado para": texto "Windows, Switch" (ou lista) no catálogo; vazio quer dizer só Windows.
+  function destinos(v) {
+    var partes = Array.isArray(v) ? v : String(v || '').split(/[,;]/);
+    var out = [];
+    partes.forEach(function (p) {
+      var t = String(p).replace(/\s+/g, ' ').trim().slice(0, 30);
+      if (t && !out.some(function (o) { return o.toLowerCase() === t.toLowerCase(); })) out.push(t);
+    });
+    return out.length ? out.slice(0, 8) : ['Windows'];
   }
 
   function norm(s) { return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
@@ -191,6 +208,10 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
     var info = el('div', 'info');
     info.appendChild(el('h2', '', g.name));
     if (g.description) info.appendChild(el('p', '', g.description));
+    var ports = el('div', 'ports');
+    ports.appendChild(el('span', '', 'Portado para'));
+    g._destinos.forEach(function (d) { ports.appendChild(el('span', 't', d)); });
+    info.appendChild(ports);
     var row = el('div', 'row');
     var proj = projectUrl(g);
     var down = https(g.homepage) || (proj && String(g.repo).indexOf('ext/') !== 0 ? proj + (proj.indexOf('github.com') > -1 ? '/releases' : '') : '');
@@ -204,8 +225,10 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
   function render() {
     var q = norm(busca.value).trim();
     var p = plat.value;
+    var d = port.value;
     var lista = jogos.filter(function (g) {
       if (p && g.platform !== p) return false;
+      if (d && g._destinos.indexOf(d) < 0) return false;
       return !q || g._texto.indexOf(q) > -1;
     });
     grade.textContent = '';
@@ -224,7 +247,8 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
       g.platform = String(g.platform || 'Outros');
       var t = Date.parse(g.added_at || '');
       g._novo = !isNaN(t) && Date.now() - t < 30 * 864e5;
-      g._texto = norm([g.name, g.platform, g.description, g.repo].join(' '));
+      g._destinos = destinos(g.target);
+      g._texto = norm([g.name, g.platform, g._destinos.join(' '), g.description, g.repo].join(' '));
       return g;
     }).sort(function (a, b) { return a.name.localeCompare(b.name, 'pt-BR', { sensitivity: 'base' }); });
 
@@ -235,12 +259,24 @@ footer div { display: flex; justify-content: space-between; gap: 12px; flex-wrap
       o.value = k;
       plat.appendChild(o);
     });
+    var dests = {};
+    jogos.forEach(function (g) { g._destinos.forEach(function (d) { dests[d] = (dests[d] || 0) + 1; }); });
+    Object.keys(dests).sort(function (a, b) {
+      if (a === 'Windows') return -1;
+      if (b === 'Windows') return 1;
+      return a.localeCompare(b, 'pt-BR');
+    }).forEach(function (k) {
+      var o = el('option', '', k + ' (' + dests[k] + ')');
+      o.value = k;
+      port.appendChild(o);
+    });
     document.getElementById('carregando').hidden = true;
     render();
   }
 
   busca.addEventListener('input', render);
   plat.addEventListener('change', render);
+  port.addEventListener('change', render);
 
   fetch(BASE + 'catalog.json', { cache: 'no-cache' })
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
